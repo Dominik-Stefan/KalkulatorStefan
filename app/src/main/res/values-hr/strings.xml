@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Morse-con</string>
+    <string name="description">Pretvarač Morsove abecede</string>
+    <string name="output">"Izlaz: "</string>
+    <string name="morse">Morsov kod</string>
+    <string name="input">"Ulaz: "</string>
+    <string name="text">Tekst</string>
+    <string name="convert">Pretvori</string>
+    <string name="switch_mode">Zamjeni</string>
+    <string name="settings">Postavke</string>
+    <string name="copy">Kopiraj</string>
+    <string name="clear">Isprazni</string>
+    <string name="font_size">Veličina fonta:</string>
+    <string name="theme">Tema</string>
+</resources>

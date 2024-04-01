@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name" translatable="false">Morse-con</string>
+    <string name="description">Morsecode-Konverter</string>
+    <string name="output">Output: </string>
+    <string name="morse">Morse-Code</string>
+    <string name="input">"Eingabe: "</string>
+    <string name="text">Klartext</string>
+    <string name="convert">Konvertieren</string>
+    <string name="switch_mode">Schalten</string>
+    <string name="settings">Einstellungen</string>
+    <string name="copy">Kopieren</string>
+    <string name="clear">Klar</string>
+    <string name="font_size">Schriftgröße:</string>
+    <string name="theme">Thema</string>
+</resources>

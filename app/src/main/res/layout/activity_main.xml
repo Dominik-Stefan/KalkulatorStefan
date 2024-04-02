@@ -67,11 +67,13 @@
         <ImageButton
             android:id="@+id/settings_btn"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:layout_margin="5dp"
             android:layout_weight="1"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
             android:contentDescription="@string/settings"
-            app:srcCompat="@android:drawable/ic_menu_manage" />
+            app:srcCompat="@drawable/setting" />
 
         <ImageButton
             android:id="@+id/switch_btn"
@@ -79,8 +81,10 @@
             android:layout_height="match_parent"
             android:layout_margin="5dp"
             android:layout_weight="1"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
             android:contentDescription="@string/switch_mode"
-            app:srcCompat="@android:drawable/stat_notify_sync" />
+            app:srcCompat="@drawable/swap" />
 
         <ImageButton
             android:id="@+id/clear_btn"
@@ -88,7 +92,9 @@
             android:layout_height="match_parent"
             android:layout_margin="5dp"
             android:layout_weight="1"
-            app:srcCompat="@android:drawable/ic_notification_clear_all"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            app:srcCompat="@drawable/bin"
             android:contentDescription="@string/clear" />
 
     </LinearLayout>

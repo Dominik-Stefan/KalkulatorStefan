@@ -7,19 +7,18 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.View
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.MultiAutoCompleteTextView
 import android.widget.SeekBar
-import android.widget.Switch
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import hr.tvz.android.kalkulatorstefan.databinding.ActivityMainBinding
 
 
 class MainActivity : AppCompatActivity() , View.OnClickListener {
 
+    private lateinit var binding: ActivityMainBinding
+
+    /*
     private lateinit var description : TextView
     private lateinit var output : TextView
     private lateinit var outputResult : TextView
@@ -33,6 +32,7 @@ class MainActivity : AppCompatActivity() , View.OnClickListener {
     private lateinit var font : TextView
     private lateinit var fontBar : SeekBar
     private lateinit var themeSwitch : Switch
+     */
 
     private var morse : Boolean = true
 
@@ -52,7 +52,13 @@ class MainActivity : AppCompatActivity() , View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.main
+
+        setContentView(view)
+
+        /*
         description = findViewById(R.id.description)
         output = findViewById(R.id.output)
         outputResult = findViewById(R.id.output_result)
@@ -66,6 +72,7 @@ class MainActivity : AppCompatActivity() , View.OnClickListener {
         font = findViewById(R.id.font_size)
         fontBar = findViewById(R.id.font_size_bar)
         themeSwitch = findViewById(R.id.theme_switch)
+         */
 
         sharedPref = getSharedPreferences("my_app_prefs", Context.MODE_PRIVATE)
 
@@ -73,34 +80,35 @@ class MainActivity : AppCompatActivity() , View.OnClickListener {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            themeSwitch.isChecked = true
+            binding.themeSwitch.isChecked = true
         }
 
-        switchMode.setOnClickListener(this)
-        settings.setOnClickListener(this)
-        convert.setOnClickListener(this)
-        copy.setOnClickListener(this)
-        clear.setOnClickListener(this)
+        binding.themeSwitch.setOnClickListener(this)
+        binding.settingsBtn.setOnClickListener(this)
+        binding.convertBtn.setOnClickListener(this)
+        binding.copyBtn.setOnClickListener(this)
+        binding.clearBtn.setOnClickListener(this)
+        binding.switchBtn.setOnClickListener(this)
 
-        font.visibility = View.GONE
-        fontBar.visibility = View.GONE
-        themeSwitch.visibility = View.GONE
+        binding.fontSize.visibility = View.GONE
+        binding.fontSizeBar.visibility = View.GONE
+        binding.themeSwitch.visibility = View.GONE
 
-        fontBar.min = 20
-        fontBar.max = 50
+        binding.fontSizeBar.min = 20
+        binding.fontSizeBar.max = 50
 
-        fontBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+        binding.fontSizeBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
 
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 if (fromUser) {
-                    description.setTextSize(TypedValue.COMPLEX_UNIT_SP, progress.toFloat())
-                    output.setTextSize(TypedValue.COMPLEX_UNIT_SP, progress.toFloat())
-                    outputResult.setTextSize(TypedValue.COMPLEX_UNIT_SP, progress.toFloat())
-                    input.setTextSize(TypedValue.COMPLEX_UNIT_SP, progress.toFloat())
-                    inputText.setTextSize(TypedValue.COMPLEX_UNIT_SP, progress.toFloat())
-                    convert.setTextSize(TypedValue.COMPLEX_UNIT_SP, progress.toFloat())
-                    font.setTextSize(TypedValue.COMPLEX_UNIT_SP, progress.toFloat())
-                    themeSwitch.setTextSize(TypedValue.COMPLEX_UNIT_SP, progress.toFloat())
+                    binding.description.setTextSize(TypedValue.COMPLEX_UNIT_SP, progress.toFloat())
+                    binding.output.setTextSize(TypedValue.COMPLEX_UNIT_SP, progress.toFloat())
+                    binding.outputResult.setTextSize(TypedValue.COMPLEX_UNIT_SP, progress.toFloat())
+                    binding.input.setTextSize(TypedValue.COMPLEX_UNIT_SP, progress.toFloat())
+                    binding.inputText.setTextSize(TypedValue.COMPLEX_UNIT_SP, progress.toFloat())
+                    binding.convertBtn.setTextSize(TypedValue.COMPLEX_UNIT_SP, progress.toFloat())
+                    binding.fontSize.setTextSize(TypedValue.COMPLEX_UNIT_SP, progress.toFloat())
+                    binding.themeSwitch.setTextSize(TypedValue.COMPLEX_UNIT_SP, progress.toFloat())
                 }
             }
 
@@ -109,7 +117,7 @@ class MainActivity : AppCompatActivity() , View.OnClickListener {
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
 
-        themeSwitch.setOnCheckedChangeListener { button, isChecked ->
+        binding.themeSwitch.setOnCheckedChangeListener { button, isChecked ->
             if (isChecked) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                 saveThemePreference(false)
@@ -122,43 +130,43 @@ class MainActivity : AppCompatActivity() , View.OnClickListener {
 
     override fun onClick(v: View?) {
         when(v?.id) {
-            R.id.switch_btn -> {
-                val tmp : String = outputResult.hint.toString()
-                outputResult.hint = inputText.hint
-                inputText.hint = tmp
+            binding.switchBtn.id -> {
+                binding.outputResult.text = ""
+                binding.inputText.setText("")
 
-                outputResult.text = ""
-                inputText.setText("")
+                val tmp : String = binding.outputResult.hint.toString()
+                binding.outputResult.setHint(binding.inputText.hint.toString())
+                binding.inputText.setHint(tmp)
 
                 morse = !morse
             }
-            R.id.settings_btn -> {
-                if (font.visibility == View.GONE) {
-                    font.visibility = View.VISIBLE
-                    fontBar.visibility = View.VISIBLE
-                    themeSwitch.visibility = View.VISIBLE
+            binding.settingsBtn.id -> {
+                if (binding.fontSize.visibility == View.GONE) {
+                    binding.fontSize.visibility = View.VISIBLE
+                    binding.fontSizeBar.visibility = View.VISIBLE
+                    binding.themeSwitch.visibility = View.VISIBLE
                 } else {
-                    font.visibility = View.GONE
-                    fontBar.visibility = View.GONE
-                    themeSwitch.visibility = View.GONE
+                    binding.fontSize.visibility = View.GONE
+                    binding.fontSizeBar.visibility = View.GONE
+                    binding.themeSwitch.visibility = View.GONE
                 }
             }
-            R.id.convert_btn -> {
+            binding.convertBtn.id -> {
                 if(morse) {
-                    outputResult.text = encodeText(inputText.text.toString())
+                    binding.outputResult.text = encodeText(binding.inputText.text.toString())
                 } else {
-                    outputResult.text = decodeMorseCode(inputText.text.toString())
+                    binding.outputResult.text = decodeMorseCode(binding.inputText.text.toString())
                 }
             }
-            R.id.copy_btn -> {
+            binding.copyBtn.id -> {
                 val clipboard = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
-                val clip = ClipData.newPlainText("output", outputResult.text)
+                val clip = ClipData.newPlainText("output", binding.outputResult.text)
                 clipboard.setPrimaryClip(clip)
                 Toast.makeText(this, "Copied to clipboard", Toast.LENGTH_SHORT).show()
             }
-            R.id.clear_btn -> {
-                outputResult.text = ""
-                inputText.setText("")
+            binding.clearBtn.id -> {
+                binding.outputResult.text = ""
+                binding.inputText.setText("")
             }
         }
     }

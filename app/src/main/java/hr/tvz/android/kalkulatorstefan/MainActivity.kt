@@ -83,7 +83,6 @@ class MainActivity : AppCompatActivity() , View.OnClickListener {
             binding.themeSwitch.isChecked = true
         }
 
-        binding.themeSwitch.setOnClickListener(this)
         binding.settingsBtn.setOnClickListener(this)
         binding.convertBtn.setOnClickListener(this)
         binding.copyBtn.setOnClickListener(this)
